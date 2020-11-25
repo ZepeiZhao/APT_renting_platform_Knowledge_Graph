@@ -8,22 +8,15 @@ driver=GraphDatabase.driver(uri="bolt://localhost:7687",auth=("neo4j", "123456")
 
 def basic(tx):
     res = [] # url list
-    res_info = [] # json [{}]
     query = "MATCH (p:aptFinder)-[:LINKS]->(q:apts)-[:HAS_FLOORPLAN]->(f:floorplan) RETURN DISTINCT p.aptFinder_url LIMIT 50"
     for record in tx.run(
        query
     ):
-        # temp = {}
-        # temp['aptFinder_url'] = record["p.aptFinder_url"]
-        # temp['title'] = record["p.title"]
-        # res_info.append(temp)
         res.append(record["p.aptFinder_url"])
-        # res = list(set(res))
     return res
 
 def basic_info(tx,county,lowest_price,highest_price,bed,bath,lowest_sqft,highest_sqft,lease):
     res = [] # url list
-    res_info = [] # json [{}]
     query = "MATCH (p:aptFinder)-[:LINKS]->(q:apts)-[:HAS_FLOORPLAN]->(f:floorplan) WHERE p.county = " + '"' \
             + str(county) + '"' + " and p.lowest_price >= " + str(lowest_price) + " and p.highest_price <= " \
             + str(highest_price) + " and f.bed >= " + str(bed) + " and f.bath >= " + str(bath) + " and f.sqft >= " \
@@ -33,17 +26,11 @@ def basic_info(tx,county,lowest_price,highest_price,bed,bath,lowest_sqft,highest
        query,county = county,lowest_sqft=lowest_sqft,lowest_price=lowest_price,bath=bath,
         bed=bed,highest_sqft=highest_sqft,highest_price=highest_price,lease=lease
     ):
-        # temp = {}
-        # temp['aptFinder_url'] = record["p.aptFinder_url"]
-        # temp['title'] = record["p.title"]
-        # res_info.append(temp)
         res.append(record["p.aptFinder_url"])
-        # res = list(set(res))
     return res
 
 def parking_allowed(tx,county,lowest_price,highest_price,bed,bath,lowest_sqft,highest_sqft,lease,parking):
     res = []
-    res_info = []
     query = "MATCH (p:aptFinder)-[:LINKS]->(q:apts)-[:HAS_FLOORPLAN]->(f:floorplan) WHERE p.county = " \
             + '"' + str(county) + '"' + " and p.lowest_price >= " + str(lowest_price) + " and p.highest_price <= " \
             + str(highest_price) + " and f.bed >= " + str(bed) + " and f.bath >= " + str(bath) + " and f.sqft >= " \
@@ -53,16 +40,10 @@ def parking_allowed(tx,county,lowest_price,highest_price,bed,bath,lowest_sqft,hi
        query,county = county,lowest_sqft=lowest_sqft,lowest_price=lowest_price,bath=bath,
         bed=bed,highest_sqft=highest_sqft,highest_price=highest_price,lease=lease,parking=parking
     ):
-        # temp = {}
-        # temp['aptFinder_url'] = record["p.aptFinder_url"]
-        # temp['title'] = record["p.title"]
-        # res_info.append(temp)
         res.append(record["p.aptFinder_url"])
-        # res = list(set(res))
     return res
 
 def pet_allowed(tx,county,lowest_price,highest_price,bed,bath,lowest_sqft,highest_sqft,lease,pet):
-    res_info = []
     res = []
     query = "MATCH (p:aptFinder)-[:LINKS]->(q:apts)-[:HAS_FLOORPLAN]->(f:floorplan) WHERE p.county = " + '"' + str(
         county) + '"' + " and p.lowest_price >= " + str(lowest_price) + " and p.highest_price <= " + str(
@@ -73,12 +54,7 @@ def pet_allowed(tx,county,lowest_price,highest_price,bed,bath,lowest_sqft,highes
             query, county=county, lowest_sqft=lowest_sqft, lowest_price=lowest_price, bath=bath,
             bed=bed, highest_sqft=highest_sqft, highest_price=highest_price, lease=lease, pet=pet
     ):
-        # temp = {}
-        # temp['aptFinder_url'] = record["p.aptFinder_url"]
-        # temp['title'] = record["p.title"]
-        # res_info.append(temp)
         res.append(record["p.aptFinder_url"])
-        # res = list(set(res))
     return res
 
 def pet_parking(tx,county,lowest_price,highest_price,bed,bath,lowest_sqft,highest_sqft,lease,pet,parking):
@@ -126,7 +102,6 @@ def match_floor_Features(tx,floor_amenities):
     # res = list(set(res))
     return res
 
-#templist = ["'High Speed Internet Access'"," 'Wi-Fi'"," 'Air Conditioning'"," 'Smoke Free'"]
 
 templist = [" 'Elevator'"," 'Storage Space'"," 'Fitness Center'"," 'Grill'"]
 def match_apt_Features(tx,apt_amenities):
@@ -421,16 +396,4 @@ def query_list(q,choose_method):
 
 
 session=driver.session()
-# q = "apartment near 6201 Hollywood Blvd and Gloria Molina or Kathleen Sky, a safe place to live"
-#q = "safe"
-# res1 = query_list(q, 1)
 
-
-# res = session.read_transaction(match_apt_Features,templist)
-# res = session.read_transaction(return_res,res_url_list)
-#res = session.read_transaction(basic_info,'los angeles','1000','5000','1','1','0','1500','12')
-#res = session.read_transaction(parking_allowed,'los angeles','1000','5000','1','1','0','1500','12',True)
-#res = session.read_transaction(pet_allowed,'los angeles','1000','5000','1','1','0','1500','12',True)
-# res = session.read_transaction(print_location)
-# res = session.read_transaction(test,True,True,"los angeles")
-# print(res1)

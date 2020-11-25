@@ -1,0 +1,208 @@
+import json
+import rltk
+import re
+
+# read data
+with open('data_source1.json', 'r') as f:
+    data_s1 = json.load(f)
+
+
+data_s1_new = {}
+for i in data_s1:
+    data_s1_new[i['id']] = i
+# print(data_s1_new)
+
+with open('data_source2.json', 'r') as f:
+    data_s2 = json.load(f)
+
+data_s2_new = {}
+for i in data_s2:
+    data_s2_new[i['id']] = i
+
+
+f = open("same_paper_targets.txt","r")
+lines = f.readlines()
+truth_data = []
+for line in lines:
+    truth = line.strip().split('\t')
+    truth_data.append(tuple(truth))
+
+
+# cal sim
+def title_similarity(string1, string2):
+    res = rltk.jaro_winkler_similarity(string1, string2)
+    return res
+
+def year_similarity(string1, string2):
+    res = rltk.levenshtein_distance(string1, string2)
+    if res == 0:
+        return 1.0
+    return 1 - res / max(len(string1), len(string2))
+# print(truth_data[0][1])
+
+def clear(string):
+    sub_str = re.sub("[+\.\!\/_,$%^*(+\"\')]+|[+——()?\[\]""!,.?~@#￥%……&*]+","",string)
+    return sub_str
+
+# title
+title_list = []
+for i in truth_data:
+    tmp = []
+    s1 = data_s1_new[i[0]]['title'].lower()
+    s2 = data_s2_new[i[1]]['title'].lower()
+    s1_new = clear(s1)
+    s2_new = clear(s2)
+    title_sim = title_similarity(s1_new,s2_new)
+    tmp.append(i[0]+'\t')
+    tmp.append(i[1]+'\t')
+    tmp.append(str(title_sim)+'\n')
+    title_list.append("".join(tmp))
+
+# year
+year_list = []
+for i in truth_data:
+    tmp = []
+    y1 = data_s1_new[i[0]]['year']
+    y2 = data_s2_new[i[1]]['year']
+    year_sim = year_similarity(y1,y2)
+    tmp.append(i[0]+'\t')
+    tmp.append(i[1]+'\t')
+    tmp.append(str(year_sim)+'\n')
+    year_list.append("".join(tmp))
+
+
+
+
+
+
+
+# title
+# title_list = []
+# for i in data_s1:
+#     for j in data_s2:
+#         tmp = []
+#         if (i['id'],j['id']) in truth_data:
+#             s1 = i['title'].lower()
+#             s2 = j['title'].lower()
+#             sim = title_similarity(s1,s2)
+#             tmp.append(i['id']+'\t')
+#             tmp.append(j['id']+'\t')
+#             tmp.append(str(sim)+'\n')
+#             title_list.append("".join(tmp))
+#print(title_list)
+
+title_file = open('title_sim_obs.txt','a')
+title_file.writelines(title_list)
+title_file.close()
+
+# year
+# title
+# year_list = []
+# for i in data_s1:
+#     for j in data_s2:
+#         tmp = []
+#         if (i['id'],j['id']) in truth_data:
+#             s1 = i['year']
+#             s2 = j['year']
+#             sim = year_similarity(s1,s2)
+#             tmp.append(i['id']+'\t')
+#             tmp.append(j['id']+'\t')
+#             tmp.append(str(sim)+'\n')
+#             year_list.append("".join(tmp))
+#print(year_list)
+
+year_file = open('years_sim_obs.txt','a')
+year_file.writelines(year_list)
+year_file.close()
+
+apartments: name address zipcode
+apartment_finder: title location zipcode
+
+{'https://www.apartments.com/nve-at-fairfax-los-angeles-ca/6nsdw3t/':
+
+# save
+
+import jsonlines
+import rltk
+import re
+
+def title_similarity(string1, string2):
+    res = rltk.levenshtein_similarity(string1, string2)
+    return res
+
+def location_similarity(string1, string2):
+    res = rltk.levenshtein_similarity(string1, string2)
+    return res
+
+def zipcode_similarity(string1, string2):
+    res = rltk.levenshtein_similarity(string1, string2)
+    return res
+
+def weight_sim(string1,string2,string3,string4):
+    res = 0.9*location_similarity(string1,string2) + 0.1*title_similarity(string3,string4)
+    return res
+
+file_apartments = "/Users/pz/Desktop/ds558/pythoncode/project/data_cleaning/apartments_los-angele.jl"
+file_aptFinder = "/Users/pz/Desktop/ds558/pythoncode/project/data_cleaning/clean_aptFinder_la.jl"
+apartments_list = []
+with open(file_apartments, "r+", encoding="utf8") as f:
+    for item in jsonlines.Reader(f):
+        apartments_list.append(item)
+print(apartments_list[0])
+
+aptFinder_list = []
+with open(file_aptFinder, "r+", encoding="utf8") as f:
+    for item in jsonlines.Reader(f):
+        aptFinder_list.append(item)
+print(aptFinder_list[0])
+
+dictFor = {}
+for i in aptFinder_list:
+    aptFinder_zipcode = i['zipcode']
+    tmp_list = []
+    for j in apartments_list:
+        tmp_dict = {}
+        # large = 0
+        if j['zipcode'] == aptFinder_zipcode:
+            weight = weight_sim(i['location'].lower(),j['address'].lower(),i['title'].lower(),j['name'].lower())
+            tmp_dict[j['url']] = weight
+
+            if weight > 0.8:
+                # if weight > large:
+                #     large = weight
+
+                tmp_list.append(tmp_dict)
+            else:pass
+        else:pass
+        # {url1:[{url2:w1]}
+    dictFor[i['url']] = tmp_list
+    cnt = 0
+    if tmp_list == []:
+        cnt+=1
+    else:pass
+print("cnt null link", cnt)
+
+print(dictFor)
+
+
+print(len(dictFor))
+
+modesto: 0.74
+napa: 0.65
+oakland 0.5
+la:0.8
+redwood: 0.8
+riverside:0.85
+sacramento: 0.7 (duplicate data)
+san-bernado: 0.84
+san-diego:0.58
+san-francisco:0.6
+san-jose: 0.5
+san-rafael:0.8
+santa-ana:0.84
+santa-barbara: x
+santa-cruz:0.83
+santa-rosa:0.82
+stockton:0.84
+ventura:
+visalia:0.8
