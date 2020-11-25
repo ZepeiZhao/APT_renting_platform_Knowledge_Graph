@@ -1,0 +1,16 @@
+/*body{*/
+/*    margin:0;*/
+/*    font-family:sans-serif;*/
+/*}*/
+
+
+h1{
+    margin-left: 50%;
+}
+body{ font-family: sans-serif; background: #eee;}
+
+body .index .container{
+    margin-left: 300px;
+    font-family: sans-serif;
+    background: #eee;
+}
