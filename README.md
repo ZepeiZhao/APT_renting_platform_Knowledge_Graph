@@ -15,11 +15,11 @@ Data Source:
 - US Census
 - Covid-19 dataset
 
-Project overview:
+Project Overview:
 
-- Data crawling: Scrapy
-- Data cleaning: python
+- Data Aquisition: Scrapy, SPARQL
+- Data Cleaning: python
 - Entity Linking: RLTK(similarity)
 - Ontology Mapping: Neo4j, Cypher
-- Web development: Flask, Python, HTML, CSS
+- Web Development: Flask, Python, HTML, CSS
 - Query Procession: Spacy, LDA
