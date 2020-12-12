@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel = "stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
+    <title> Best Matching Apartments in CA </title>
+    <style>
+        body{
+            background-color: #fafafa;
+            font-family: Optima;
+        }
+        h1 {
+            margin-left: 23%;
+            margin-top: 50px;
+            font-size: 50px;
+            color: #11557C;
+        }
+        .container{
+            margin-left: 13%;
+            font-size: 15px;
+        }
+        .fortable{
+            margin-bottom: 20px;
+            border: 5px;
+            border-bottom-color: #11557C;
+
+
+        }
+        #row2, #row3, #row4, #row5, #row6, #row7, #row8, #row9{
+            width : 950px;
+            margin-left: 5%;
+
+        }
+        /*#row3{*/
+        /*    width : 950px;*/
+        /*    margin-left: 5%;*/
+        /*}*/
+        .detail{
+
+        }
+        table{
+            width:100%
+        }
+        td{
+            /*border: 1px solid #86989B;*/
+            #background-color: #f2e9e4;
+            background-color: #eee4e1;
+        }
+
+
+    </style>
+
+
+
+
+</head>
+<body class="result">
+<h1> Best Matching Apartments in CA </h1>
+<!--<p>{{ length }} </p>-->
+<div class = "container">
+{% for i in data %}
+    <form class = "fortable">
+        <table class = "detail" id = "row1">
+                <ul style="font-size: 20px; margin-bottom: 10px">{{i.title}}
+                <button onclick="window.open('{{i.aptFinder_url}}');" type="button">Apartment Finder</button>
+                <button onclick="window.open('{{i.apts_url}}');" type="button">Apartments</button>
+                </ul>
+        </table>
+
+
+        <table id = "row2">
+
+            <td> Address: {{ i.address }}</td>
+            <td> Zipcode: {{ i.zipcode }}</td>
+            <td> Phone Number: {{ i.phone }} </td>
+             {% if i.lowest_price != null %}
+            <td> Lowest_price: {{ i.lowest_price }}</td>
+             {% endif %}
+
+             {% if i.rating != 0 %}
+            <td> Rating: {{ i.rating }}</td>
+             {% else %}
+            <td> Rating: No Data </td>
+             {% endif %}
+
+
+
+        </table>
+
+        <table id = "row3">
+             {% if i.cat_policy == True %}
+            <td> Cat Policy: Allowed</td>
+             {% elif i.cat_policy == False %}
+            <td> Cat Policy: Not Allowed</td>
+             {% else %}
+            <td> Cat Policy: Unknown</td>
+             {% endif %}
+
+            {% if i.dog_policy == True %}
+            <td> Dog Policy: Allowed</td>
+             {% elif i.dog_policy == False %}
+            <td> Dog Policy: Not Allowed</td>
+             {% else %}
+            <td> Dog Policy: Unknown</td>
+             {% endif %}
+
+            {% if i.parking == True %}
+            <td> Parking Policy: Allowed</td>
+             {% elif i.parking == False %}
+            <td> Parking Policy: Not Allowed</td>
+             {% else %}
+            <td> Parking Policy: Unknown</td>
+             {% endif %}
+
+            {% if i.shortest_lease_term != null %}
+            <td> Shortest Lease Term: {{i.shortest_lease_term}} </td>
+             {% else %}
+            <td> Shortest Lease Term: Unknown</td>
+             {% endif %}
+
+             {% if i.built_in_time != null %}
+            <td> Builtin Time: {{i.built_in_time}} </td>
+             {% else %}
+            <td> Builtin Time: Unknown</td>
+             {% endif %}
+
+              {% if i.reviewa != 0 %}
+            <td> Reviews: {{ i.reviews }}</td>
+             {% else %}
+            <td> Reviews: No Data </td>
+             {% endif %}
+
+        </table>
+
+        <table id = "row4">
+            <td style="font-weight: bold">Covid Deaths: {{i.covid_deaths}}</td>
+            <td style="font-weight: bold">Covid Confirmation: {{i.covid_confirmed}}</td>
+        </table>
+
+        <table id = "row5">
+            <td>Bachelor Rate: {{i.bachelorplus}}</td>
+            <td>Marriage Rate: {{i.marriage}}</td>
+            <td>Jail: {{i.jail}}</td>
+            <td>Employment Rate: {{i.employ}}</td>
+            <td>White Ratio: {{i.white_ratio}}</td>
+            <td>Black Ratio: {{i.black_ratio}}</td>
+            <td>Asian Ratio: {{i.asian_ratio}}</td>
+        </table>
+
+        <table class="description" id = "row6">
+            <td> Description</td>
+            <td>{{i.description}}</td>
+        </table>
+
+        <table  id = "row7">
+            <td> Rent Special</td>
+            <td>{{i.rent_special}}</td>
+        </table>
+
+        <table  id = "row8">
+            <td> Floorplan Amenities</td>
+            <td>
+            {% for j in i.floorplan_amenities %}
+            {{ j+" | " }}
+            {% endfor %}
+            </td>
+        </table>
+
+        <table  id = "row9">
+            <td> Community Amenities</td>
+            <td>
+            {% for j in i.community_features %}
+            {{ j+" | " }}
+            {% endfor %}
+            </td>
+        </table>
+
+    </form>
+
+
+{% endfor %}
+</div>
+</body>
+</html>

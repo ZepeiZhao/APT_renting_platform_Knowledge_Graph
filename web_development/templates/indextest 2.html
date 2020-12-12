@@ -1,0 +1,204 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel = "stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
+    <title> Best Matching Apartments in CA </title>
+    <style>
+        body{
+            background-color: #fafafa;
+            font-family: Optima;
+        }
+        h1 {
+            margin-left: 23%;
+            margin-top: 50px;
+            font-size: 50px;
+            color: #11557C;
+        }
+        .container{
+            margin-left: 35%;
+            font-size: 20px;
+        }
+        /*.county_input{*/
+        /*    margin-bottom: 20px;*/
+        /*}*/
+        /*.keyword{*/
+        /*    margin-bottom: 20px;*/
+        /*}*/
+        /*.pets{*/
+        /*    margin-bottom: 20px;*/
+        /*}*/
+        .c1{
+            margin-left: 1%;
+            margin-bottom: 15px;
+        }
+
+    </style>
+    <script>
+        function formReset()
+          {
+          document.getElementById("myForm").reset()
+          }
+    </script>
+
+
+</head>
+<body class="index">
+
+<h1> Best Matching Apartments in CA </h1>
+<div class="container" >
+    <form action="/" method="post" id="myForm">
+        <div class = 'county_input'>
+            County Name <input class = "c1" type="text" name="county_name" value="" style="height: 20px">
+        </div>
+
+         <div class = 'keyword'>
+             <span> Special Requirement </span>
+             <div style="margin-top: 15px"> <input class = "c1" type="text" name="keyword" value="" style="width: 300px;height: 20px"></div>
+        </div>
+
+        <div class ="pets">
+            <span> Pet Policy </span>
+            <input class = "c1" type="checkbox" name="pet" value="pet" id="pet"> Pet Allowed </input>
+
+        </div>
+
+        <div class="parking">
+            <span> Parking </span>
+            <input class = "c1" type="checkbox" name="parking" value="parking">Parking Contained</input>
+        </div>
+
+
+        <div class = "Beds">
+            <span> Beds </span>
+            <select class = "c1" name="Beds">
+                <option value=-1>Choose Bed Number</option>
+                <option value="0">Studio</option>
+                <option value="1">1+</option>
+                <option value="2">2+</option>
+                <option value="3">3+</option>
+                <option value="4">4+</option>
+            </select>
+        </div>
+
+        <div class = "Baths">
+            <span>Baths</span>
+            <select class = "c1" name="Baths">
+                <option value=-1>Choose Bath Number</option>
+                <option value="0">0</option>
+                <option value="1">1+</option>
+                <option value="2">2+</option>
+                <option value="3">3+</option>
+            </select>
+        </div>
+
+        <div class = "SQFT">
+            <span>Sqft</span>
+            <select class = "c1" name = "SQFT">
+                <option value="-1">Choose Sqft</option>
+                <option value="0 500">0-500</option>
+                <option value="500 1000">500-1000</option>
+                <option value="1000 1500">1000-1500</option>
+                <option value="1500 2000">1500-2000</option>
+                <option value="2000 10000">2000+</option>
+            </select>
+        </div>
+
+        <div class = "Price">
+            <span>Price Range</span>
+            <select class = "c1" name="price">
+                <option value="-1">Choose Price Range</option>
+                <option value="0 1000">0-1000</option>
+                <option value="1000 2000">1000-2000</option>
+                <option value="2000 3000">2000-3000</option>
+                <option value="3000 4000">3000-4000</option>
+                <option value="4000 5000">4000-5000</option>
+                <option value="5000 10000">5000-10000</option>
+
+            </select>
+        </div>
+
+        <div class = "Lease">
+            <span>Lease Term</span>
+            <select class = "c1" name="lease_term">
+                <option value="-1">Choose Lease Term</option>
+                <option value="6">Less than six month</option>
+                <option value="12">Less than one year</option>
+                <option value="24">Less than two year</option>
+                <option value="36">More than three year</option>
+            </select>
+        </div>
+
+        <div class ="required features">
+            <span> Features Choose</span>
+            <p><select class = "ff" name="floorplan features" multiple>
+                <optgroup label="Floorplan Features">
+                    <option>Air Conditioning</option>
+                    <option>Balcony</option>
+                    <option>Cable Ready</option>
+                    <option>Carpet</option>
+                    <option>Closet</option>
+                    <option>Deck</option>
+                    <option>Dishwasher</option>
+                    <option>Disposal</option>
+                    <option>Freezer</option>
+                    <option>Heating</option>
+                    <option>Hardwoord Floors</option>
+                    <option>Ice Maker</option>
+                    <option>Grill</option>
+                    <option>Microwave</option>
+                    <option>Oven</option>
+                    <option>Patio</option>
+                    <option>Refrigerator</option>
+                    <option>Security System</option>
+                    <option>Tub/Shower</option>
+                    <option>View</option>
+                    <option>Washer/Dryer</option>
+                    <option>Window Coverings</option>
+                </optgroup>
+            </select>
+            <select  name="apartment features" multiple>
+                <optgroup class = "ff" label="Apartment Features">
+                    <option>Breakfast/Coffee Concierge</option>
+                    <option>Car Charging Station</option>
+                    <option>Clubhouse</option>
+                    <option>Conference Rooms</option>
+                    <option>Courtyard</option>
+                    <option>Disposal Chutes</option>
+                    <option>Elevator</option>
+                    <option>Fitness Center</option>
+                    <option>Grill</option>
+                    <option>Key Fob Entry</option>
+                    <option>Lounge</option>
+                    <option>Media Center/Movie Theatre</option>
+                    <option>Pet Play Area</option>
+                    <option>Pet Washing Station</option>
+                    <option>Picnic Area</option>
+                    <option>Planned Social Activities</option>
+                    <option>Pool</option>
+                    <option>Public Transportation</option>
+                    <option>Recycling</option>
+                    <option>Roof</option>
+                    <option>Roommate Matching</option>
+                    <option>Sundeck</option>
+                    <option>Spa</option>
+                    <option>Storage Space</option>
+                    <option>Wi-Fi</option>
+                </optgroup>
+            </select>
+            </p>
+        </div>
+
+
+    <input type="submit" value="Submit" style="width:100px;height:30px;">
+
+    <input type="button" style="width:100px;height:30px;" onclick="formReset()" value="Reset">
+
+    </form>
+</div>
+</body>
+</html>
+
+

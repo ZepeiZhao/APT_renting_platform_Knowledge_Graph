@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block body %}
+<h1> Detail </h1>
+
+<table id = "detail">
+    <thread>
+        <th>aptFinder url</th>
+        <th>title</th>
+    </thread>
+    <tbody>
+        {% for i in data %}
+         <tr>
+            <td onclick="window.open('{{i.aptFinder_url}}');"> aptFinder_url </td>
+            <td>{{ i.title }}</td>
+         </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

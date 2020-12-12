@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title> Best Matching Apartment in CA </title>
+{% endblock %}
+
+{% block body %}
+<h1> Best Matching Apartment in CA </h1>
+
+<div class="container" >
+
+    <div class = 'county_input' style="padding-left: 100px">
+        <form action="/" method="post">
+            County Name <input style="margin-left: 100px" type="text" name="county_name" value="">
+            <input type="submit" value="Submit">
+        </form>
+
+    </div>
+
+    <div class = 'dropdown'>
+        <div id = "Beds">
+            <span> Beds </span>
+            <select name="Beds">
+                <option value=-1>Choose Bed Number</option>
+                <option value="0">Studio</option>
+                <option value="1">1+</option>
+                <option value="2">2+</option>
+                <option value="3">3+</option>
+                <option value="4">4+</option>
+            </select>
+        </div>
+
+        <div id = "Baths">
+            <span>Baths</span>
+            <select name="Baths">
+                <option value=-1>Choose Bath Number</option>
+                <option value="0">0</option>
+                <option value="1">1+</option>
+                <option value="2">2+</option>
+                <option value="3">3+</option>
+            </select>
+        </div>
+
+        <div id = "SQFT">
+            <span>Sqft</span>
+            <select class="SQFT">
+                <option value="-1">Choose Sqft</option>
+                <option value="0 500">0-500</option>
+                <option value="500 1000">500-1000</option>
+                <option value="1000 1500">1000-1500</option>
+                <option value="1500 2000">1500-2000</option>
+                <option value="2000 10000">2000+</option>
+            </select>
+        </div>
+
+        <div id = "Price">
+            <span>Price Range</span>
+            <select class="price">
+                <option value="-1">Choose Price Range</option>
+                <option value="0 1000">0-1000</option>
+                <option value="1000 1500">1000-1500</option>
+                <option value="1500 2000">1500-2000</option>
+                <option value="2000 2500">2000-2500</option>
+                <option value="2500 3000">2500-3000</option>
+                <option value="3000 3500">3000-3500</option>
+                <option value="3500 4000">3500-4000</option>
+                <option value="4000 10000">4000+</option>
+            </select>
+        </div>
+
+        <div id = "Lease">
+            <span>Lease Term</span>
+            <select id="lease_term">
+                <option value="-1">Choose Lease Term</option>
+                <option value="0">Less than one month</option>
+                <option value="1">Less than six month</option>
+                <option value="2">Less than one year</option>
+                <option value="3">More than one year</option>
+            </select>
+        </div>
+
+    </div>
+
+    <div class="checkbox">
+
+        <div id="pet" class ="form">
+            <form action="/" method="post">
+                <span> Pet Policy </span>
+                <input type="checkbox" name="cat" value="cat" id="cat"> Cat Allowed </input>
+                <input type="checkbox" name="dog" value="dog" id = "dog"> Dog Allowed </input>
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+
+        <div id="parking">
+            <span> Parking </span>
+            <input type="checkbox" name="parking" value="parking">Parking Contained</input>
+        </div>
+
+
+        <div id="required features">
+            <span> Features Choosen</span>
+            <p><select id="floorplan features" multiple>
+                <optgroup label="Floorplan Features">
+                    <option>Air Conditioning</option>
+                    <option>Balcony</option>
+                    <option>Cable Ready</option>
+                    <option>Carpet</option>
+                    <option>Closet</option>
+                    <option>Deck</option>
+                    <option>Dishwasher</option>
+                    <option>Disposal</option>
+                    <option>Freezer</option>
+                    <option>Heating</option>
+                    <option>Hardwoord Floors</option>
+                    <option>Ice Maker</option>
+                    <option>Grill</option>
+                    <option>Microwave</option>
+                    <option>Oven</option>
+                    <option>Patio</option>
+                    <option>Refrigerator</option>
+                    <option>Security System</option>
+                    <option>Tub/Shower</option>
+                    <option>View</option>
+                    <option>Washer/Dryer</option>
+                    <option>Window Coverings</option>
+                </optgroup>
+            </select>
+            <select id="apartment features" multiple>
+                <optgroup label="Apartment Features">
+                    <option>Breakfast/Coffee Concierge</option>
+                    <option>Car Charging Station</option>
+                    <option>Clubhouse</option>
+                    <option>Conference Rooms</option>
+                    <option>Courtyard</option>
+                    <option>Disposal Chutes</option>
+                    <option>Elevator</option>
+                    <option>Fitness Center</option>
+                    <option>Grill</option>
+                    <option>Key Fob Entry</option>
+                    <option>Lounge</option>
+                    <option>Media Center/Movie Theatre</option>
+                    <option>Pet Play Area</option>
+                    <option>Pet Washing Station</option>
+                    <option>Picnic Area</option>
+                    <option>Planned Social Activities</option>
+                    <option>Pool</option>
+                    <option>Public Transportation</option>
+                    <option>Recycling</option>
+                    <option>Roof</option>
+                    <option>Roommate Matching</option>
+                    <option>Sundeck</option>
+                    <option>Spa</option>
+                    <option>Storage Space</option>
+                    <option>Wi-Fi</option>
+                </optgroup>
+            </select>
+            </p>
+        </div>
+    </div>
+    <input type="submit" value="Submit">
+
+</div>
+
+
+{% endblock %}
